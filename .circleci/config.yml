@@ -1,7 +1,18 @@
 version: 2.1
+
 orbs:
-  node: circleci/node@3.0.0
+  node: circleci/node@4.1
+  aws-s3: circleci/aws-s3@2.0
+
 workflows:
-  node-tests:
+  sample:
     jobs:
-      - node/test
+      - node/test:
+          version: "15.1"
+          # after the node/test job completes, build the dist packages and save them to a workspace
+          post-steps:
+            - run: npm run build
+            - aws-s3/sync:
+                from: build/
+                to: s3://ma-react
+                arguments: --acl public-read

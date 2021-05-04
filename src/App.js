@@ -7,7 +7,7 @@ function App() {
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <p>
-          Hello from AWS S3.
+          Hello from AWS S3. I was deployed using CircleCI!
         </p>
         <a
           className="App-link"
