@@ -14,5 +14,5 @@ workflows:
             - run: npm run build
             - aws-s3/sync:
                 from: build/
-                to: s3://ma-react
+                to: "s3://ma-react"
                 arguments: --acl public-read
