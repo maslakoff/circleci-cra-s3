@@ -8,6 +8,7 @@ function App() {
         <img src={logo} className="App-logo" alt="logo" />
         <p>
           Hello from AWS S3. I was deployed using CircleCI!
+          Please test app before release it.
         </p>
         <a
           className="App-link"
