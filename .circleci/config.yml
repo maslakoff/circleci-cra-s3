@@ -3,6 +3,21 @@ version: 2.1
 orbs:
   node: circleci/node@4.1
   aws-s3: circleci/aws-s3@2.0
+  slack: circleci/slack@4.4.2
+
+jobs:
+  notify:
+    docker:
+      - image: "cimg/base:stable"
+    steps:
+      - run: echo "deploy my app"
+      - slack/notify:
+          event: fail
+          mentions: "@EngineeringTeam"
+          template: basic_fail_1
+      - slack/notify:
+          event: pass
+          template: success_tagged_deploy_1
 
 workflows:
   production_build_and_deploy:
@@ -24,6 +39,9 @@ workflows:
                 from: build/
                 to: "s3://ma-react"
                 arguments: --acl public-read
+      - notify:
+          requires:
+            - node/test
 
   development_build_and_deploy:
     jobs:
@@ -40,6 +58,9 @@ workflows:
             branches:
               only:
                 - develop
+      - notify:
+          requires:
+            - node/test
 
   dayly_tests:
     triggers:
