@@ -7,11 +7,15 @@ orbs:
 workflows:
   production_build_and_deploy:
     jobs:
-      - request-testing:
+      - approval:
           type: approval
-          # requires:
-          #   - node/test
+          filters:
+            branches:
+              only:
+                - main
       - node/test:
+          requires:
+            - approval
           version: "15.1"
           # after the node/test job completes, build the dist packages and save them to a workspace
           post-steps:
@@ -20,10 +24,6 @@ workflows:
                 from: build/
                 to: "s3://ma-react"
                 arguments: --acl public-read
-          filters:
-            branches:
-              only:
-                - main
 
   development_build_and_deploy:
     jobs:
