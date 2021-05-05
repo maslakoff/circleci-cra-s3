@@ -36,3 +36,19 @@ workflows:
             branches:
               only:
                 - develop
+
+  dayly_tests:
+    triggers:
+      -schedule:
+          cron: "*/5 * * * *"
+          filters:
+            branches:
+              only:
+                - main
+    jobs:
+      - node/test:
+          version: "15.1"
+          # after the node/test job completes, build the dist packages and save them to a workspace
+          post-steps:
+            - run: npm run build
+            
