@@ -7,6 +7,10 @@ orbs:
 workflows:
   production_build_and_deploy:
     jobs:
+      - request-testing:
+          type: approval
+          # requires:
+          #   - node/test
       - node/test:
           version: "15.1"
           # after the node/test job completes, build the dist packages and save them to a workspace
