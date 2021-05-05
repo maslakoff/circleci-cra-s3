@@ -5,7 +5,7 @@ orbs:
   aws-s3: circleci/aws-s3@2.0
 
 workflows:
-  sample:
+  production_build_and_deploy:
     jobs:
       - node/test:
           version: "15.1"
@@ -16,3 +16,23 @@ workflows:
                 from: build/
                 to: "s3://ma-react"
                 arguments: --acl public-read
+          filters:
+            branches:
+              only:
+                - main
+
+  development_build_and_deploy:
+    jobs:
+      - node/test:
+          version: "15.1"
+          # after the node/test job completes, build the dist packages and save them to a workspace
+          post-steps:
+            - run: npm run build
+            - aws-s3/sync:
+                from: build/
+                to: "s3://prod-ma-react"
+                arguments: --acl public-read
+          filters:
+            branches:
+              only:
+                - develop
