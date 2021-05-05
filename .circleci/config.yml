@@ -13,11 +13,12 @@ jobs:
       - run: echo "deploy my app"
       - slack/notify:
           event: fail
-          mentions: "@EngineeringTeam"
+          mentions: "@i.maslakoff"
           template: basic_fail_1
       - slack/notify:
           event: pass
-          template: success_tagged_deploy_2
+          mentions: "@i.maslakoff"
+          template: success_tagged_deploy_1
 
 workflows:
   production_build_and_deploy:
