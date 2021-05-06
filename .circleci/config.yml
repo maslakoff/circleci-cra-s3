@@ -62,14 +62,14 @@ workflows:
           requires:
             - node/test
 
-  dayly_tests:
-    triggers:
-      - schedule:
-          cron: "30,35,40,45 * * * *"
-          filters:
-            branches:
-              only:
-                - main
-    jobs:
-      - node/test:
-          version: "15.1"
+  # dayly_tests:
+  #   triggers:
+  #     - schedule:
+  #         cron: "30,35,40,45 * * * *"
+  #         filters:
+  #           branches:
+  #             only:
+  #               - main
+  #   jobs:
+  #     - node/test:
+  #         version: "15.1"
